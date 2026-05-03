@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="D:/Src/Data/Code/VisualStudio/.DaThabe/ImageHub/ImageHub.Abstractions/ImageHub.Abstractions.csproj" Id="de36a226-b024-4cc8-acbf-ddecf5b48fe6" />
+  <Project Path="D:/Src/Data/Code/VisualStudio/.DaThabe/ImageHub/ImageHub/ImageHub.csproj" Id="4f1f402f-49c7-4695-8da5-d8f43b8441bb" />
+  <Project Path="ImageHub.Cli/ImageHub.Cli.csproj" Id="cafde453-0e3c-43b2-b95e-4e2e78854aaf" />
+</Solution>

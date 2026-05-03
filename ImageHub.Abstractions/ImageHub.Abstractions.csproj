@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net10.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<RootNamespace>ImageHub</RootNamespace>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="FluentResults" Version="4.0.0" />
+		<PackageReference Include="StronglyTypedId" Version="1.0.0-beta08" />
+		<PackageReference Include="StronglyTypedIds" Version="1.0.1" />
+	</ItemGroup>
+
+</Project>
