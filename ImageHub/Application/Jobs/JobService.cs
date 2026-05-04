@@ -1,10 +1,38 @@
-﻿using ImageHub.Domain.Entities;
+﻿using Flurl;
+using ImageHub.Domain.Entities;
 using ImageHub.Domain.Repositories;
 using ImageHub.Domain.Services;
 using ImageHub.Models;
 using ImageHub.Services;
 
 namespace ImageHub.Application.Jobs;
+
+
+public record CreateJob(string Url);
+public record CreateJobResult(JobId JobId);
+
+public sealed class CreateJobHandler(
+    ISourceParser sourceService,
+    ISourceRepository sourceRepository,
+    IJobRepository jobRepository,
+    IUnitOfWork unitOfWork
+    )
+{
+    public async Task<CreateJobResult> HandleAsync(CreateJob createJob, CancellationToken cancellationToken = default)
+    {
+        // 获取来源
+        var source = sourceService.Parse(createJob.Url);
+        await sourceRepository.UpsertAsync(source, cancellationToken);
+
+        // 创建任务
+        var job = await jobRepository.GetOrCreateBySourceIdAsync(source.Id, cancellationToken);
+
+        // 保存修改
+        await unitOfWork.SaveChangesAsync(cancellationToken);
+
+        return new CreateJobResult(job.Id);
+    }
+}
 
 
 /// <summary>

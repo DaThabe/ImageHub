@@ -16,17 +16,25 @@ internal abstract class RepositoryBase<TEntity, TId>(ImageHubDbContext dbContext
     where TEntity : class, IEntity<TId>
     where TId : IEquatable<TId>
 {
-    public async ValueTask AddAsync(TEntity entity, CancellationToken cancellationToken = default)
-    {
-        await dbContext.AddAsync(entity, cancellationToken);
-    }
-
     public async ValueTask<TEntity?> FindByIdAsync(TId id, CancellationToken cancellationToken = default)
     {
         return await dbContext
             .Set<TEntity>()
             .AsNoTracking()
             .FirstOrDefaultAsync(x => x.Id.Equals(id), cancellationToken);
+    }
+
+    public async ValueTask<TEntity> GetByIdAsync(TId id, CancellationToken cancellationToken = default)
+    {
+        return await dbContext
+            .Set<TEntity>()
+            .AsNoTracking()
+            .FirstAsync(x => x.Id.Equals(id), cancellationToken);
+    }
+
+    public async ValueTask AddAsync(TEntity entity, CancellationToken cancellationToken = default)
+    {
+        await dbContext.AddAsync(entity, cancellationToken);
     }
 
     public async ValueTask<bool> ExistsAsync(TId id, CancellationToken cancellationToken = default)
@@ -131,4 +139,6 @@ internal abstract class RepositoryBase<TEntity, TId>(ImageHubDbContext dbContext
             .Skip(skip)
             .ToListAsync(cancellationToken);
     }
+
+    
 }

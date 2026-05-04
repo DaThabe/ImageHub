@@ -11,6 +11,12 @@ namespace ImageHub.Sources;
 /// <param name="logger"></param>
 internal sealed partial class SourceParser : ISourceParser
 {
+    public Source Parse(string url)
+    {
+        if (TryParse(url, out var source)) return source;
+        throw new InvalidOperationException("无法解析的Url");
+    }
+
     public bool TryParse(string url, [NotNullWhen(true)] out Source? source)
     {
         source = null;
@@ -124,4 +130,6 @@ internal sealed partial class SourceParser : ISourceParser
     // 微博博客链接匹配 https://weibo.com/{userId}/{blogId}
     [GeneratedRegex(@"https?:\/\/weibo\.com\/(?<userId>\d+)\/(?<blogId>[a-zA-Z0-9]+)")]
     private static partial Regex WeiboBlogUrlRegex();
+
+    
 }

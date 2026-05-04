@@ -49,7 +49,7 @@ internal sealed class XiaoHongShuMetadataExtractor(ILogger<XiaoHongShuMetadataEx
         //作者名称
         var author_name = await author_element.Locator(".username").InnerTextAsync();
         //作者Url
-        var author_url = await page.Locator(".author-wrapper a").GetAttributeAsync("href");
+        var author_url = await author_element.Locator("a.name").GetAttributeAsync("href");
         if (author_url != null) author_url = $"https://www.xiaohongshu.com{author_url}";
 
         logger.LogDebug("元数据获取完成");

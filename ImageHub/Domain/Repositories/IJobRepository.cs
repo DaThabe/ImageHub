@@ -10,6 +10,7 @@ namespace ImageHub.Domain.Repositories;
 public interface IJobRepository : IRepository<Job, JobId>
 {
     Task<Job?> FindBySourceIdAsync(SourceId sourceId, CancellationToken cancellationToken = default);
+    Task<Job> GetOrCreateBySourceIdAsync(SourceId sourceId, CancellationToken cancellationToken = default);
 
-    Task<IReadOnlyCollection<Job>> FindActivitysAsync(CancellationToken cancellationToken = default);
+    Task<IReadOnlyCollection<Job>> GetActivitysAsync(CancellationToken cancellationToken = default);
 }

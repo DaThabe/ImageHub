@@ -1,5 +1,4 @@
 ﻿using ImageHub.Enums;
-using ImageHub.Infrastructure.Extensions;
 using ImageHub.Models;
 using System.Security.Cryptography;
 using System.Text;

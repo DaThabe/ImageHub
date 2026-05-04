@@ -9,5 +9,5 @@ namespace ImageHub.Domain.Repositories;
 /// </summary>
 public interface ISourceRepository : IRepository<Source, SourceId>
 {
-
+    
 }

@@ -32,7 +32,7 @@ internal sealed class JobRecoveryBackgroundService(
             using var cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             cts.CancelAfter(TimeSpan.FromSeconds(30));
 
-            var jobs = await jobRepository.FindActivitysAsync(cts.Token);
+            var jobs = await jobRepository.GetActivitysAsync(cts.Token);
 
             foreach (var i in jobs)
             {

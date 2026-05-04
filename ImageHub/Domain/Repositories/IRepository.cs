@@ -12,10 +12,13 @@ public interface IRepository<TEntity, TId>
     where TEntity : IEntity<TId>
     where TId : IEquatable<TId>
 {
-    ValueTask AddAsync(TEntity entity, CancellationToken cancellationToken = default);
     ValueTask UpdateAsync(TEntity entity, CancellationToken cancellationToken = default);
-    ValueTask<TEntity?> FindByIdAsync(TId id, CancellationToken cancellationToken = default);
+    
+    ValueTask AddAsync(TEntity entity, CancellationToken cancellationToken = default);
     ValueTask<bool> ExistsAsync(TId id, CancellationToken cancellationToken = default);
+
+    ValueTask<TEntity?> FindByIdAsync(TId id, CancellationToken cancellationToken = default);
+    ValueTask<TEntity> GetByIdAsync(TId id, CancellationToken cancellationToken = default);
 
 
     ValueTask<IReadOnlyCollection<TEntity>> GetAllAsync(CancellationToken cancellationToken = default);
@@ -26,4 +29,22 @@ public interface IRepository<TEntity, TId>
     ValueTask<IReadOnlyCollection<TResult>> GetAllAsync<TResult>(CancellationToken cancellationToken = default) where TResult : TEntity;
     ValueTask<IReadOnlyCollection<TResult>> GetPagedAsync<TResult>(int take, int skip = 0, CancellationToken cancellationToken = default) where TResult : TEntity;
     ValueTask<IReadOnlyCollection<TResult>> GetAllAfterSkipAsync<TResult>(int skip, CancellationToken cancellationToken = default) where TResult : TEntity;
+}
+
+public static class RepositoryExtensions
+{
+    extension<TEntity, TId>(IRepository<TEntity, TId> repository)
+        where TEntity : IEntity<TId>
+        where TId : IEquatable<TId>
+    {
+        public async ValueTask UpsertAsync(TEntity entity, CancellationToken cancellationToken = default)
+        {
+            if (await repository.ExistsAsync(entity.Id, cancellationToken))
+            {
+                return;
+            }
+
+            await repository.AddAsync(entity, cancellationToken);
+        }
+    }
 }

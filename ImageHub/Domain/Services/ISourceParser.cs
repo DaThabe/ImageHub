@@ -16,4 +16,11 @@ public interface ISourceParser
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     bool TryParse(string url, [NotNullWhen(true)] out Source? source);
+
+    /// <summary>
+    /// 转换为来源
+    /// </summary>
+    /// <param name="url"></param>
+    /// <returns></returns>
+    Source Parse(string url);
 }

@@ -11,7 +11,7 @@ internal sealed class JobRepository(ImageHubDbContext dbContext) : RepositoryBas
 {
     private readonly ImageHubDbContext _dbContext = dbContext;
 
-    public async Task<IReadOnlyCollection<Job>> FindActivitysAsync(CancellationToken cancellationToken = default)
+    public async Task<IReadOnlyCollection<Job>> GetActivitysAsync(CancellationToken cancellationToken = default)
     {
         return await _dbContext.Jobs
             .AsNoTracking()
@@ -24,5 +24,21 @@ internal sealed class JobRepository(ImageHubDbContext dbContext) : RepositoryBas
         return await _dbContext.Jobs
             .AsNoTracking()
             .FirstOrDefaultAsync(x => x.SourceId == sourceId, cancellationToken);
+    }
+
+    public async Task<Job> GetOrCreateBySourceIdAsync(SourceId sourceId, CancellationToken cancellationToken = default)
+    {
+        // 查询
+        var exists = await _dbContext.Jobs
+            .AsNoTracking()
+            .Where(x => x.SourceId == sourceId)
+            .FirstOrDefaultAsync(cancellationToken);
+        if (exists is not null) return exists;
+
+        // 创建
+        var created = new Job(JobId.Create(), sourceId);
+        await _dbContext.AddAsync(created, cancellationToken);
+
+        return created;
     }
 }
