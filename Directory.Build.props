@@ -1,6 +1,14 @@
 <Project>
-  <PropertyGroup>
-    <Nullable>enable</Nullable>
-    <AvaloniaVersion>11.1.0</AvaloniaVersion>
-  </PropertyGroup>
+	<PropertyGroup>
+		<Nullable>enable</Nullable>
+		<AvaloniaVersion>11.1.0</AvaloniaVersion>
+	</PropertyGroup>
+
+
+	<PropertyGroup>
+		<PackageOutputPath>D:\Src\Cache\Nuget\thabesoft</PackageOutputPath>
+		<IncludeSymbols>true</IncludeSymbols>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+	</PropertyGroup>
+	
 </Project>
