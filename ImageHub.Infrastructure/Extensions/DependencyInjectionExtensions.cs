@@ -1,5 +1,4 @@
 ﻿using ImageHub.Application.Services;
-using ImageHub.Domain.Events;
 using ImageHub.Domain.Repositories;
 using ImageHub.Infrastructure.Browser;
 using ImageHub.Infrastructure.Database;
@@ -12,6 +11,7 @@ using ImageHub.Infrastructure.Services.Sources;
 using ImageHub.Infrastructure.Telegram;
 using ImageHub.Sources;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Telegram.Bot;
 

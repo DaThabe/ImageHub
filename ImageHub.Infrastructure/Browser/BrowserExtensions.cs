@@ -1,6 +1,6 @@
 ﻿using Microsoft.Playwright;
 
-namespace ImageHub.Infrastructure.Extensions;
+namespace ImageHub.Infrastructure.Browser;
 
 /// <summary>
 /// 浏览器扩展

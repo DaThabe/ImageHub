@@ -17,13 +17,6 @@ internal sealed class TwitterMetadataExtractor(ILogger<TwitterMetadataExtractor>
     public SourceType SupportType { get; } = SourceType.Twitter;
     public async Task<Metadata> GetAsync(IPage page, Source source, CancellationToken cancellationToken = default)
     {
-        using var scope = logger.BeginScope(new Dictionary<string, object>
-        {
-            ["Url"] = source.Url,
-            ["SourceId"] = source.Id,
-            ["SourceType"] = source.Type
-        });
-
         logger.LogDebug("正在进入 Twitter 页面");
 
         // 等待页面加载

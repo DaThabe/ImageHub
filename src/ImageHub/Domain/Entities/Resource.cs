@@ -7,7 +7,7 @@ namespace ImageHub.Domain.Entities;
 /// <summary>
 /// 资源
 /// </summary>
-internal sealed class Resource : AggregateRoot<ResourceId>
+public sealed class Resource : AggregateRoot<ResourceId>
 {
     /// <summary>
     /// 所属元数据

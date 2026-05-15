@@ -1,6 +1,5 @@
 ﻿using ImageHub.Domain.Events;
 using ImageHub.Enums;
-using ImageHub.Infrastructure;
 using ImageHub.Infrastructure.Telegram;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -56,13 +55,15 @@ internal sealed partial class TelegramPublisher(
         }
         finally
         {
-            logger.LogInformation("正在清理图像加载缓存...");
+            logger.LogDebug("正在清理图像加载缓存");
 
             sentMedias
                 .Select(x => x.Media)
                 .OfType<InputFileStream>()
                 .ToList()
                 .ForEach(x => x.Content.Dispose());
+
+            logger.LogInformation("图像缓存清理完毕");
         }
     }
 

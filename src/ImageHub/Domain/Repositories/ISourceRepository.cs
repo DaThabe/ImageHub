@@ -8,4 +8,4 @@ namespace ImageHub.Domain.Repositories;
 /// <summary>
 /// 来源储存库
 /// </summary>
-internal interface ISourceRepository : IRepository<Source, SourceId>;
+public interface ISourceRepository : IRepository<Source, SourceId>;

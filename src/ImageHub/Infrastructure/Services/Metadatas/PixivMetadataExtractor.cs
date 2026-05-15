@@ -9,27 +9,16 @@ namespace ImageHub.Infrastructure.Services.Metadatas;
 /// <summary>
 /// Pixiv作品 元数据提取器
 /// </summary>
-/// <param name="logger"></param>
 internal sealed class PixivMetadataExtractor(ILogger<PixivMetadataExtractor> logger) : IMetadataExtractor
 {
     public SourceType SupportType { get; } = SourceType.Pixiv;
 
     public async Task<Metadata> GetAsync(IPage page, Source source, CancellationToken cancellationToken = default)
     {
-        using var scope = logger.BeginScope(new Dictionary<string, object>
-        {
-            ["Url"] = source.Url,
-            ["SourceId"] = source.Id,
-            ["SourceType"] = source.Type
-        });
-
-        if (logger.IsEnabled(LogLevel.Debug))
-        {
-            logger.LogDebug("正在进入 Pixiv 页面, Url:{url}", page.Url);
-        }
+        logger.LogDebug("正在进入 Pixiv 页面");
 
         // 1. 等待核心元素加载
-        await page.GotoAsync(source.Url, new PageGotoOptions() { Timeout = 60000 });
+        await page.GotoAsync(source.Url, new PageGotoOptions() { Timeout = 12000 });
         await page.WaitForSelectorAsync("main figure img");
 
         // 2. 处理“查看全部”折叠逻辑

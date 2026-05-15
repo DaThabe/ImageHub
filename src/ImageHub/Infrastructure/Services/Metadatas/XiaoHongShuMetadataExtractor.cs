@@ -1,7 +1,7 @@
 ﻿using ImageHub.Domain.Entities;
 using ImageHub.Enums;
 using ImageHub.Extensions;
-using ImageHub.Infrastructure.Extensions;
+using ImageHub.Infrastructure.Browser;
 using ImageHub.Models;
 using Microsoft.Extensions.Logging;
 using Microsoft.Playwright;
@@ -17,10 +17,7 @@ internal sealed class XiaoHongShuMetadataExtractor(ILogger<XiaoHongShuMetadataEx
     public SourceType SupportType { get; } = SourceType.XiaoHongShu;
     public async Task<Metadata> GetAsync(IPage page, Source source, CancellationToken cancellationToken = default)
     {
-        if (logger.IsEnabled(LogLevel.Debug))
-        {
-            logger.LogDebug("正在进入小红书页面: Url:{url}", page.Url);
-        }
+        logger.LogDebug("正在进入小红书页面");
 
         // 等待加载
         await page.GotoAsync(source.Url);

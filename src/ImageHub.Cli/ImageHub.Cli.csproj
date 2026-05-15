@@ -13,7 +13,7 @@
 		<PackageReference Include="Serilog.Settings.Configuration" Version="10.0.1-dev-02334" />
 		<PackageReference Include="Serilog.Sinks.Console" Version="6.1.1" />
 		<PackageReference Include="Serilog.Sinks.File" Version="8.0.0-nblumhardt-02322" />
-		<PackageReference Include="Spectre.Console" Version="0.55.1-alpha.0.8" />
+		<PackageReference Include="Spectre.Console" Version="0.55.2" />
 	</ItemGroup>
 
 	<ItemGroup>

@@ -1,7 +1,7 @@
-﻿using ImageHub.Domain.Events;
-using ImageHub.Domain.Repositories;
-using ImageHub.Enums;
+﻿using ImageHub.Enums;
+using ImageHub.Events;
 using ImageHub.Models;
+using ImageHub.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -30,7 +30,7 @@ public interface IJobQueue
 
 
 internal sealed class JobQueue(IServiceScopeFactory scopeFactory, ILogger<JobQueue> logger) :
-    BackgroundService, IJobQueue
+    BackgroundService, IJobQueue, INotificationHandler<JobCreatedDomainEvent>
 {
     private readonly Channel<JobId> _channel = Channel.CreateBounded<JobId>(50);
 
@@ -43,6 +43,12 @@ internal sealed class JobQueue(IServiceScopeFactory scopeFactory, ILogger<JobQue
             logger.LogInformation("已添加至任务消费列表, 任务Id:{id}", jobId);
         }
     }
+
+    public ValueTask HandleAsync(JobCreatedDomainEvent notification, CancellationToken cancellationToken = default)
+    {
+        return EnqueueAsync(notification.JobId, cancellationToken);
+    }
+
     public async ValueTask RecoverAsync(CancellationToken cancellationToken)
     {
         await using var scope = scopeFactory.CreateAsyncScope();
@@ -83,7 +89,7 @@ internal sealed class JobQueue(IServiceScopeFactory scopeFactory, ILogger<JobQue
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         // 恢复任务
-        await RecoverAsync(stoppingToken);
+        //await RecoverAsync(stoppingToken);
 
         var options = new ParallelOptions
         {

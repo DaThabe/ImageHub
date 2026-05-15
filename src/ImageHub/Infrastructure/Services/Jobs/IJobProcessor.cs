@@ -53,7 +53,6 @@ internal sealed class JobProcessor(
         if (job.State == JobState.Pending)
         {
             job.StartDownloadMetadata();
-            await jobRepository.UpdateAsync(job, cancellationToken);
             await unitOfWork.SaveChangesAsync(cancellationToken);
         }
 
@@ -65,7 +64,6 @@ internal sealed class JobProcessor(
             // 下载完成
             job.MetadataDownloaded();
             job.StartDownloadResources();
-            await jobRepository.UpdateAsync(job, cancellationToken);
             await unitOfWork.SaveChangesAsync(cancellationToken);
         }
 
@@ -76,7 +74,6 @@ internal sealed class JobProcessor(
             // 提交下载完成阶段数据
             job.ResourceDownloaded();
             job.StartPublish();
-            await jobRepository.UpdateAsync(job, cancellationToken);
             await unitOfWork.SaveChangesAsync(cancellationToken);
         }
 
@@ -87,7 +84,6 @@ internal sealed class JobProcessor(
             // 提交下载完成阶段数据
             job.Published();
             job.Complete();
-            await jobRepository.UpdateAsync(job, cancellationToken);
             await unitOfWork.SaveChangesAsync(cancellationToken);
         }
     }
@@ -100,7 +96,6 @@ internal sealed class JobProcessor(
         if (source is null)
         {
             job.Fail();
-            await jobRepository.UpdateAsync(job, cancellationToken);
             await unitOfWork.SaveChangesAsync(cancellationToken);
 
             throw new InvalidOperationException($"无法获取来源信息, 任务 Id:{job.Id}");
@@ -154,7 +149,6 @@ internal sealed class JobProcessor(
 
                 //TODO: 先失败, 以后再重试
                 job.Fail();
-                await jobRepository.UpdateAsync(job, cancellationToken);
                 await unitOfWork.SaveChangesAsync(cancellationToken);
                 throw;
             }

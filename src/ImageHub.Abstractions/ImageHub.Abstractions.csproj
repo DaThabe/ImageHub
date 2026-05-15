@@ -8,7 +8,6 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="FluentResults" Version="4.0.0" />
 		<PackageReference Include="StronglyTypedId" Version="1.0.0-beta08" />
 		<PackageReference Include="StronglyTypedIds" Version="1.0.1" />
 		<PackageReference Include="ThabeSoft.Mediator.Contracts" Version="1.0.0" />

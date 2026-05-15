@@ -9,7 +9,7 @@ namespace ImageHub.Infrastructure.Services.Publishs;
 /// 发布任务
 /// </summary>
 public sealed class PublishJobService(
-    IPublishJobRepository  publishJobRepository,
+    IPublishJobRepository publishJobRepository,
     IUnitOfWork unitOfWork
     ) : IPublishJobService
 {
@@ -20,8 +20,6 @@ public sealed class PublishJobService(
 
         // 标记完成
         publish_job.Completed();
-        await publishJobRepository.UpdateAsync(publish_job, cancellationToken);
-
         await unitOfWork.SaveChangesAsync(cancellationToken);
     }
 
@@ -35,11 +33,7 @@ public sealed class PublishJobService(
         try
         {
             // 批量完成
-            foreach (var i in publish_jobs)
-            {
-                i.Completed();
-                await publishJobRepository.UpdateAsync(i, cancellationToken);
-            }
+            foreach (var i in publish_jobs) i.Completed();
 
             await unitOfWork.SaveChangesAsync(cancellationToken);
             await transaction.CommitAsync(cancellationToken);

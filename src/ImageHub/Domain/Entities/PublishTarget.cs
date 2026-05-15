@@ -8,7 +8,7 @@ namespace ImageHub.Domain.Entities;
 /// <summary>
 /// 发布目标
 /// </summary>
-internal abstract class PublishTarget : AggregateRoot<PublishTargetId>
+public abstract class PublishTarget : AggregateRoot<PublishTargetId>
 {
     public PublishTargetType Type { get; }
 
@@ -27,7 +27,7 @@ internal abstract class PublishTarget : AggregateRoot<PublishTargetId>
 /// <summary>
 /// 电报群组
 /// </summary>
-internal sealed class TelegramGroupPublishTarget : PublishTarget
+public sealed class TelegramGroupPublishTarget : PublishTarget
 {
     public long GroupId { get; }
 

@@ -1,5 +1,4 @@
 ﻿using ImageHub.Commands;
-using ImageHub.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -45,9 +44,9 @@ internal static class Program
 
 
             await using var scope = scopeFactory.CreateAsyncScope();
-            var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
+            var sender = scope.ServiceProvider.GetRequiredService<ISender>();
 
-            await mediator.SendAsync(new CreateJobCommand(url));
+            await sender.SendAsync(new CreateJobCommand(url));
         }
     }
 

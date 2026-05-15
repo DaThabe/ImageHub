@@ -21,7 +21,11 @@ internal sealed class CreateJobCommandHandler(
     {
         // 获取来源
         var source = sourceService.Parse(createJob.Url);
-        await sourceRepository.UpsertAsync(source, cancellationToken);
+
+        if (!await sourceRepository.ExistsAsync(source.Id, cancellationToken))
+        {
+            await sourceRepository.AddAsync(source, cancellationToken);
+        }
 
         // 创建任务
         var job = await jobRepository.GetOrCreateBySourceIdAsync(source.Id, cancellationToken);

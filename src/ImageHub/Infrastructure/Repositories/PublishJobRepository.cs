@@ -13,7 +13,7 @@ namespace ImageHub.Infrastructure.Repositories;
 /// 发布任务储存库
 /// </summary>
 internal sealed class PublishJobRepository(ImageHubDbContext dbContext) :
-   EfCoreRepositoryBase<ImageHubDbContext, PublishJob, PublishJobId>(dbContext), IPublishJobRepository
+   RepositoryBase<ImageHubDbContext, PublishJob, PublishJobId>(dbContext), IPublishJobRepository
 {
     private readonly ImageHubDbContext _dbContext = dbContext;
 
@@ -29,7 +29,6 @@ internal sealed class PublishJobRepository(ImageHubDbContext dbContext) :
         if (id_list.Length == 0) return [];
 
         return await _dbContext.PublishJobs
-            .AsNoTracking()
             .Where(x => id_list.Contains(x.Id))
             .ToListAsync(cancellationToken);
     }
@@ -37,21 +36,18 @@ internal sealed class PublishJobRepository(ImageHubDbContext dbContext) :
     public async Task<PublishJob?> FindBySourceIdAsync(SourceId sourceId, CancellationToken cancellationToken = default)
     {
         return await _dbContext.PublishJobs
-            .AsNoTracking()
             .FirstOrDefaultAsync(x => x.SourceId == sourceId, cancellationToken);
     }
 
     public async ValueTask<PublishJob?> FindByTargetIdAndResourceId(PublishTargetId publishTargetId, ResourceId resourceId, CancellationToken cancellationToken = default)
     {
         return await _dbContext.PublishJobs
-           .AsNoTracking()
            .FirstOrDefaultAsync(x => x.PublishTargetId == publishTargetId && x.ResourceId == resourceId, cancellationToken);
     }
 
     public async Task<IReadOnlyList<PublishJob>> GetActiveJobsAsync(CancellationToken cancellationToken = default)
     {
         var items = await _dbContext.PublishJobs
-            .AsNoTracking()
             .Where(x => x.State != PublishJobState.Completed)
             .ToListAsync(cancellationToken);
 

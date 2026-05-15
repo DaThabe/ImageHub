@@ -10,19 +10,11 @@ namespace ImageHub.Infrastructure.Services.Metadatas;
 /// <summary>
 /// 微博博客 元数据提取器
 /// </summary>
-/// <param name="logger"></param>
 internal sealed class WeiboMetadataExtractor(ILogger<WeiboMetadataExtractor> logger) : IMetadataExtractor
 {
     public SourceType SupportType { get; } = SourceType.Weibo;
     public async Task<Metadata> GetAsync(IPage page, Source source, CancellationToken cancellationToken = default)
     {
-        using var scope = logger.BeginScope(new Dictionary<string, object>
-        {
-            ["Url"] = source.Url,
-            ["SourceId"] = source.Id,
-            ["SourceType"] = source.Type
-        });
-
         logger.LogDebug("正在进入 微博 页面");
 
         // 等待页面加载

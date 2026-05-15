@@ -11,7 +11,7 @@ namespace ImageHub.Infrastructure.Repositories;
 /// 来源储存库
 /// </summary>
 internal sealed class SourceRepository(ImageHubDbContext dbContext) :
-    EfCoreRepositoryBase<ImageHubDbContext, Source, SourceId>(dbContext), ISourceRepository
+    RepositoryBase<ImageHubDbContext, Source, SourceId>(dbContext), ISourceRepository
 {
 
 }

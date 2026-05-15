@@ -18,8 +18,5 @@ internal interface IMetadataExtractor
     /// <summary>
     /// 从来源获取元数据
     /// </summary>
-    /// <param name="page"></param>
-    /// <param name="cancellationToken"></param>
-    /// <returns></returns>
     Task<Metadata> GetAsync(IPage page, Source souce, CancellationToken cancellationToken = default);
 }

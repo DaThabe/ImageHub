@@ -18,6 +18,13 @@ internal sealed class MetadataProvider(
 {
     public async Task<Metadata> FetchAsync(Source source, CancellationToken cancellationToken = default)
     {
+        using var scope = logger.BeginScope(new Dictionary<string, object>
+        {
+            ["Url"] = source.Url,
+            ["SourceId"] = source.Id,
+            ["SourceType"] = source.Type
+        });
+
         await sourceSemaphoreSlim.WaitAsync(source.Type, cancellationToken);
         var page = await browserService.SharedContext.NewPageAsync();
 

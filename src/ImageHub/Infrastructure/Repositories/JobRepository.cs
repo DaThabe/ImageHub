@@ -11,14 +11,13 @@ namespace ImageHub.Infrastructure.Repositories;
 /// <summary>
 /// 任务
 /// </summary>
-internal sealed class JobRepository(ImageHubDbContext dbContext) : EfCoreRepositoryBase<ImageHubDbContext, Job, JobId>(dbContext), IJobRepository
+internal sealed class JobRepository(ImageHubDbContext dbContext) : RepositoryBase<ImageHubDbContext, Job, JobId>(dbContext), IJobRepository
 {
     private readonly ImageHubDbContext _dbContext = dbContext;
 
     public async Task<IReadOnlyCollection<Job>> GetActivitysAsync(CancellationToken cancellationToken = default)
     {
         return await _dbContext.Jobs
-            .AsNoTracking()
             .Where(x => x.State != Enums.JobState.Failed && x.State != Enums.JobState.Completed)
             .ToListAsync(cancellationToken: cancellationToken);
     }
@@ -26,7 +25,6 @@ internal sealed class JobRepository(ImageHubDbContext dbContext) : EfCoreReposit
     public async Task<Job?> FindBySourceIdAsync(SourceId sourceId, CancellationToken cancellationToken = default)
     {
         return await _dbContext.Jobs
-            .AsNoTracking()
             .FirstOrDefaultAsync(x => x.SourceId == sourceId, cancellationToken);
     }
 
@@ -34,7 +32,6 @@ internal sealed class JobRepository(ImageHubDbContext dbContext) : EfCoreReposit
     {
         // 查询
         var exists = await _dbContext.Jobs
-            .AsNoTracking()
             .Where(x => x.SourceId == sourceId)
             .FirstOrDefaultAsync(cancellationToken);
         if (exists is not null) return exists;

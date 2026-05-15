@@ -36,7 +36,7 @@ internal sealed class BrowserService(IOptions<BrowserOptions> options, ILogger<B
         if (_playwright is null)
         {
             logger.LogDebug("检查并安装 Chromium 内核依赖...");
-            Program.Main(["install", "chromium"]);
+            //Program.Main(["install", "chromium"]);
 
             _playwright = await Microsoft.Playwright.Playwright.CreateAsync();
             logger.LogDebug("Playwright 引擎实例初始化成功");
@@ -45,8 +45,7 @@ internal sealed class BrowserService(IOptions<BrowserOptions> options, ILogger<B
         // 初始化 共享浏览器实例
         if (_sharedBrowser is null)
         {
-            var launchOption = new BrowserTypeLaunchOptions { Headless = options.Value.Headless };
-            _sharedBrowser = await _playwright.Chromium.LaunchAsync(launchOption);
+            _sharedBrowser = await _playwright.Chromium.LaunchAsync(options.Value);
             logger.LogDebug("已经创建共享浏览器实例");
         }
 
