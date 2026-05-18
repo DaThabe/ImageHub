@@ -19,17 +19,12 @@
 		<PackageReference Include="Flurl.Http" Version="4.0.2" />
 		<PackageReference Include="Telegram.Bot" Version="22.10.0.1" />
 		<PackageReference Include="SixLabors.ImageSharp" Version="3.1.12" />
+		<PackageReference Include="ThabeSoft.DomainDrivenDesign" Version="0.1.0-alpha.1" />
+		<PackageReference Include="ThabeSoft.Mediator" Version="0.1.0-alpha.2" />
 		
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\libs\DomainDrivenDesign\src\ThabeSoft.DomainDrivenDesign.EntityFrameworkCore\ThabeSoft.DomainDrivenDesign.EntityFrameworkCore.csproj" />
-		<ProjectReference Include="..\..\libs\DomainDrivenDesign\src\ThabeSoft.DomainDrivenDesign.Mediator\ThabeSoft.DomainDrivenDesign.Mediator.csproj" />
-		<ProjectReference Include="..\..\libs\DomainDrivenDesign\src\ThabeSoft.DomainDrivenDesign\ThabeSoft.DomainDrivenDesign.csproj" />
-		<ProjectReference Include="..\..\libs\Mediator\src\ThabeSoft.Mediator.SourceGenerator\ThabeSoft.Mediator.SourceGenerator.csproj"
-						  OutputItemType="Analyzer"
-						  ReferenceOutputAssembly="false" />
-		<ProjectReference Include="..\..\libs\Mediator\src\ThabeSoft.Mediator\ThabeSoft.Mediator.csproj" />
 		<ProjectReference Include="..\ImageHub.Abstractions\ImageHub.Abstractions.csproj" />
 	</ItemGroup>
 

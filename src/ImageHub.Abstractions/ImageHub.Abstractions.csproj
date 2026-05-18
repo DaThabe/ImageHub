@@ -10,10 +10,7 @@
 	<ItemGroup>
 		<PackageReference Include="StronglyTypedId" Version="1.0.0-beta08" />
 		<PackageReference Include="StronglyTypedIds" Version="1.0.1" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <ProjectReference Include="..\..\libs\Mediator\src\ThabeSoft.Mediator.Contracts\ThabeSoft.Mediator.Contracts.csproj" />
+		<PackageReference Include="ThabeSoft.Mediator.Contracts" Version="0.1.0-alpha.1" />
 	</ItemGroup>
 
 </Project>

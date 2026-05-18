@@ -1,4 +1,0 @@
-[submodule "libs/Mediator"]
-	path = libs/Mediator
-	url = https://github.com/ThabeSoft/Mediator.git
-	branch = main
