@@ -7,6 +7,7 @@
     <Project Path="libs/DomainDrivenDesign/src/ThabeSoft.DomainDrivenDesign/ThabeSoft.DomainDrivenDesign.csproj" />
   </Folder>
   <Folder Name="/Libs/Mediator/">
+    <Project Path="../../ThabeSoft/DomainDrivenDesign/libs/Mediator/src/ThabeSoft.Mediator/ThabeSoft.Mediator.csproj" />
     <Project Path="libs/Mediator/src/ThabeSoft.Mediator.Contracts/ThabeSoft.Mediator.Contracts.csproj" />
   </Folder>
   <Project Path="src/ImageHub.Abstractions/ImageHub.Abstractions.csproj" />

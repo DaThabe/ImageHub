@@ -23,6 +23,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\..\..\..\ThabeSoft\DomainDrivenDesign\libs\Mediator\src\ThabeSoft.Mediator\ThabeSoft.Mediator.csproj" />
 		<ProjectReference Include="..\..\libs\DomainDrivenDesign\src\ThabeSoft.DomainDrivenDesign.EntityFrameworkCore\ThabeSoft.DomainDrivenDesign.EntityFrameworkCore.csproj" />
 		<ProjectReference Include="..\..\libs\DomainDrivenDesign\src\ThabeSoft.DomainDrivenDesign.Mediator\ThabeSoft.DomainDrivenDesign.Mediator.csproj" />
 		<ProjectReference Include="..\..\libs\DomainDrivenDesign\src\ThabeSoft.DomainDrivenDesign\ThabeSoft.DomainDrivenDesign.csproj" />
