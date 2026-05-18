@@ -1,8 +1,8 @@
 ﻿using ImageHub.Application.Services;
 using ImageHub.Domain.Entities;
 using ImageHub.Domain.Events;
-using ImageHub.Domain.Repositories;
 using ImageHub.Enums;
+using ImageHub.Infrastructure.Repositories;
 using ImageHub.Infrastructure.Services.Resources;
 using ImageHub.Models;
 using Microsoft.Extensions.Logging;
@@ -28,18 +28,17 @@ public interface IJobProcessor
 internal sealed class JobProcessor(
     IUnitOfWork unitOfWork,
 
-    IJobRepository jobRepository,
-    ISourceRepository sourceRepository,
+    IRepository<Source, SourceId> sourceRepository,
 
-    IMetadataRepository metadataRepository,
+    IRepository<Metadata, MetadataId> metadataRepository,
     IMetadataProvider metadataOrchestrator,
 
     IResourceDownloader resourceService,
-    IResourceRepository resourceRepository,
+    IRepository<Resource, ResourceId> resourceRepository,
 
     IPublishJobService publishJobService,
-    IPublishJobRepository publishJobRepository,
-    IPublishTargetRepository publishTargetRepository,
+    IRepository<PublishJob, PublishJobId> publishJobRepository,
+    IRepository<PublishTarget, PublishTargetId> publishTargetRepository,
 
     IDomainEventPublisher domainEventPublisher,
 
@@ -124,12 +123,24 @@ internal sealed class JobProcessor(
     {
         // 下载资源
         int order_index = 0;
-        List<Resource> resources = [];
+        var resources = new List<Resource>();
+        var lastDownloadTime = DateTime.MinValue;
 
         foreach (var url in metadata.Resources)
         {
             try
             {
+                // 随机等待
+                var minInterval = Random.Shared.Next(2000, 5000);
+                var timeSinceLast = DateTime.Now - lastDownloadTime;
+
+                if (timeSinceLast.TotalMilliseconds < minInterval)
+                {
+                    var waitTime = (int)(minInterval - timeSinceLast.TotalMilliseconds);
+                    await Task.Delay(waitTime, cancellationToken);
+                }
+
+                // 开始下载
                 var file_path = await resourceService.DownloadAsync(url, source.Type, true, cancellationToken);
                 var resource = await resourceRepository.FindByUrlAsync(url, cancellationToken);
 

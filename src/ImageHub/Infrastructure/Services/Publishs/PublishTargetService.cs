@@ -1,6 +1,6 @@
 ﻿using ImageHub.Application.Services;
 using ImageHub.Domain.Entities;
-using ImageHub.Domain.Repositories;
+using ImageHub.Infrastructure.Repositories;
 using ImageHub.Models;
 using ThabeSoft.DomainDrivenDesign;
 
@@ -8,7 +8,7 @@ namespace ImageHub.Infrastructure.Services.Publishs;
 
 
 internal sealed class PublishTargetService(
-    IPublishTargetRepository publishTargetRepository,
+    IRepository<PublishTarget, PublishTargetId> publishTargetRepository,
     IUnitOfWork unitOfWork
     ) : IPublishTargetService
 {

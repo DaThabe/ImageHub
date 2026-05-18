@@ -1,5 +1,6 @@
 ﻿namespace ImageHub.Enums;
 
+
 /// <summary>
 /// 来源类型
 /// </summary>
@@ -9,7 +10,7 @@ public enum SourceType
     /// 未知
     /// </summary>
     Unknown = 0,
-      
+
     /// <summary>
     /// P站
     /// </summary>
@@ -28,5 +29,10 @@ public enum SourceType
     /// <summary>
     /// 微博
     /// </summary>
-    Weibo
+    WeiBo,
+
+    /// <summary>
+    /// 小黑盒
+    /// </summary>
+    XiaoHeiHe,
 }

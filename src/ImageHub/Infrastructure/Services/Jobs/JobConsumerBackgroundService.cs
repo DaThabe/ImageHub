@@ -1,10 +1,11 @@
 ﻿using ImageHub.Application.Services;
-using ImageHub.Domain.Repositories;
+using ImageHub.Domain.Entities;
 using ImageHub.Enums;
 using ImageHub.Models;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using ThabeSoft.DomainDrivenDesign;
 
 namespace ImageHub.Infrastructure.Services.Jobs;
 
@@ -55,7 +56,7 @@ internal sealed class JobConsumerBackgroundService(IServiceScopeFactory scopeFac
     {
         await using var scope = scopeFactory.CreateAsyncScope();
         var services = scope.ServiceProvider;
-        var job_repository = services.GetRequiredService<IJobRepository>();
+        var job_repository = services.GetRequiredService<IRepository<Job, JobId>>();
         var job_processor = services.GetRequiredService<IJobProcessor>();
 
 

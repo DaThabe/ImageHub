@@ -1,15 +1,17 @@
 ﻿using ImageHub.Application.Services;
-using ImageHub.Domain.Repositories;
+using ImageHub.Domain.Entities;
+using ImageHub.Infrastructure.Repositories;
 using ImageHub.Models;
 using ThabeSoft.DomainDrivenDesign;
 
 namespace ImageHub.Infrastructure.Services.Publishs;
 
+
 /// <summary>
 /// 发布任务
 /// </summary>
 public sealed class PublishJobService(
-    IPublishJobRepository publishJobRepository,
+    IRepository<PublishJob, PublishJobId> publishJobRepository,
     IUnitOfWork unitOfWork
     ) : IPublishJobService
 {

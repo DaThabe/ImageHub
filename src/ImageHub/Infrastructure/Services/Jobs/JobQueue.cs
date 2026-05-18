@@ -1,5 +1,6 @@
 ﻿using ImageHub.Application.Services;
-using ImageHub.Domain.Repositories;
+using ImageHub.Domain.Entities;
+using ImageHub.Infrastructure.Repositories;
 using ImageHub.Models;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -30,7 +31,7 @@ internal sealed class JobQueue(IServiceScopeFactory scopeFactory, ILogger<JobQue
     public async ValueTask RecoverAsync(CancellationToken cancellationToken)
     {
         await using var scope = scopeFactory.CreateAsyncScope();
-        var jobRepository = scope.ServiceProvider.GetRequiredService<IJobRepository>();
+        var jobRepository = scope.ServiceProvider.GetRequiredService<IRepository<Job, JobId>>();
         var publisher = scope.ServiceProvider.GetRequiredService<IDomainEventPublisher>();
 
         logger.LogDebug("正在从数据库恢复未完成的发布任务");

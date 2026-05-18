@@ -2,6 +2,7 @@
 using ImageHub.Enums;
 using ImageHub.Models;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Microsoft.Playwright;
 
 namespace ImageHub.Infrastructure.Services.Metadatas;
@@ -18,14 +19,14 @@ internal sealed class PixivMetadataExtractor(ILogger<PixivMetadataExtractor> log
         logger.LogDebug("正在进入 Pixiv 页面");
 
         // 1. 等待核心元素加载
-        await page.GotoAsync(source.Url, new PageGotoOptions() { Timeout = 12000 });
-        await page.WaitForSelectorAsync("main figure img");
+        await page.GotoAsync(source.Url, new() { Timeout = 120000, WaitUntil= WaitUntilState.DOMContentLoaded });
+        await page.WaitForSelectorAsync("main figure img", new() { Timeout = 120000 });
 
         // 2. 处理“查看全部”折叠逻辑
         var btn = page.Locator("button:has-text('查看全部'), button:has-text('展开')");
         if (await btn.CountAsync() > 0)
         {
-            await btn.ClickAsync();
+            await btn.ClickAsync(new() { Delay = Random.Shared.Next(500, 3000) });
             logger.LogDebug("点击展开图像");
 
             await page.EvaluateAsync("window.scrollTo(0, document.body.scrollHeight)");

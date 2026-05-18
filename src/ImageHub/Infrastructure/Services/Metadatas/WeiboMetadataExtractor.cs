@@ -12,13 +12,13 @@ namespace ImageHub.Infrastructure.Services.Metadatas;
 /// </summary>
 internal sealed class WeiboMetadataExtractor(ILogger<WeiboMetadataExtractor> logger) : IMetadataExtractor
 {
-    public SourceType SupportType { get; } = SourceType.Weibo;
+    public SourceType SupportType { get; } = SourceType.WeiBo;
     public async Task<Metadata> GetAsync(IPage page, Source source, CancellationToken cancellationToken = default)
     {
         logger.LogDebug("正在进入 微博 页面");
 
         // 等待页面加载
-        await page.GotoAsync(source.Url);
+        await page.GotoAsync(source.Url, new() { WaitUntil = WaitUntilState.DOMContentLoaded, Timeout = 3000 });
         await page.WaitForSelectorAsync("article.woo-panel-main");
 
         // 判断是否是转发的微博

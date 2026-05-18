@@ -1,6 +1,8 @@
 ﻿using ImageHub.Application.Services;
 using ImageHub.Commands;
-using ImageHub.Domain.Repositories;
+using ImageHub.Domain.Entities;
+using ImageHub.Models;
+using Microsoft.EntityFrameworkCore;
 using ThabeSoft.DomainDrivenDesign;
 using ThabeSoft.Mediator;
 
@@ -12,8 +14,8 @@ namespace ImageHub.Application.Handlers;
 /// </summary>
 internal sealed class CreateJobCommandHandler(
     ISourceParser sourceService,
-    ISourceRepository sourceRepository,
-    IJobRepository jobRepository,
+    IRepository<Source, SourceId> sourceRepository,
+    IRepository<Job, JobId> jobRepository,
     IUnitOfWork unitOfWork
     ) : IRequestHandler<CreateJobCommand, CreateJobResult>
 {
@@ -22,13 +24,18 @@ internal sealed class CreateJobCommandHandler(
         // 获取来源
         var source = sourceService.Parse(createJob.Url);
 
-        if (!await sourceRepository.ExistsAsync(source.Id, cancellationToken))
+        if (!await sourceRepository.Query.AnyAsync(x => x.Id == source.Id, cancellationToken))
         {
             await sourceRepository.AddAsync(source, cancellationToken);
         }
 
         // 创建任务
-        var job = await jobRepository.GetOrCreateBySourceIdAsync(source.Id, cancellationToken);
+        var job = await jobRepository.Query.FirstOrDefaultAsync(x => x.SourceId == source.Id, cancellationToken);
+        if(job is null)
+        {
+            job = new Job(JobId.Create(), source.Id);
+            await jobRepository.AddAsync(job, cancellationToken);
+        }
 
         // 保存修改
         await unitOfWork.SaveChangesAsync(cancellationToken);

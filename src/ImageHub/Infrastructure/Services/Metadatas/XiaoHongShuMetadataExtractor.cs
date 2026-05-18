@@ -20,7 +20,7 @@ internal sealed class XiaoHongShuMetadataExtractor(ILogger<XiaoHongShuMetadataEx
         logger.LogDebug("正在进入小红书页面");
 
         // 等待加载
-        await page.GotoAsync(source.Url);
+        await page.GotoAsync(source.Url, new() { WaitUntil = WaitUntilState.DOMContentLoaded, Timeout = 3000 });
         await page.WaitForSelectorAsync(".swiper-wrapper img");
 
         logger.LogDebug("正在获取元数据");

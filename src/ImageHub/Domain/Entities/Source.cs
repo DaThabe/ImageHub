@@ -183,7 +183,7 @@ public sealed class WeiboBlogSource : Source
 {
     public long UserId { get; }
     public string BlogId { get; }
-    public override SourceType Type => SourceType.Weibo;
+    public override SourceType Type => SourceType.WeiBo;
     public override string Url => $"https://weibo.com/{UserId}/{BlogId}";
 
 
@@ -201,6 +201,30 @@ public sealed class WeiboBlogSource : Source
 
         var id = new SourceId(CreateFromString($"WeiboBlogSource_{userId}_{blogId}"));
         return new WeiboBlogSource(id, userId, blogId);
+    }
+
+    public override string ToString()
+    {
+        return Url;
+    }
+}
+
+
+public sealed class XiaoHeiHeBbsSource : Source
+{
+    public long BbsId { get; }
+    public override SourceType Type => SourceType.WeiBo;
+    public override string Url => $"https://weibo.com/{BbsId}/{BbsId}";
+
+
+    private XiaoHeiHeBbsSource(SourceId id, long bbsId) : base(id)
+    {
+        BbsId = bbsId;
+    }
+    public static XiaoHeiHeBbsSource Create(long bbsId)
+    {
+        var id = new SourceId(CreateFromString($"XiaoHeiHeBbsSource_{bbsId}"));
+        return new XiaoHeiHeBbsSource(id, bbsId);
     }
 
     public override string ToString()

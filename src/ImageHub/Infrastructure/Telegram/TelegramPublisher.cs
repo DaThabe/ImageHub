@@ -219,7 +219,7 @@ internal sealed partial class TelegramPublisher(
                 SourceType.Twitter => "推特",
                 SourceType.Pixiv => "Pixiv",
                 SourceType.XiaoHongShu => "小红书",
-                SourceType.Weibo => "微博",
+                SourceType.WeiBo => "微博",
                 _ => "网站"
             };
         }

@@ -4,21 +4,20 @@ using ImageHub.Infrastructure.Services.Sources;
 using ImageHub.Infrastructure.Telegram;
 using Microsoft.EntityFrameworkCore;
 
-namespace ImageHub;
+namespace ImageHub.DependencyInjection;
 
 
-public interface IImageHubOptionsBuilder
+public interface IImageHubOptions
 {
-    IImageHubOptionsBuilder Database(Action<DbContextOptionsBuilder> buildAction);
-    IImageHubOptionsBuilder Resource(Action<ResourceOptions> buildAction);
-    IImageHubOptionsBuilder Source(Action<SourceConcurrencyOptions> buildAction);
+    IImageHubOptions Database(Action<DbContextOptionsBuilder> buildAction);
+    IImageHubOptions Resource(Action<ResourceOptions> buildAction);
+    IImageHubOptions Source(Action<SourceConcurrencyOptions> buildAction);
 
-    IImageHubOptionsBuilder Browser(Action<BrowserOptions> buildAction);
-    IImageHubOptionsBuilder TelegramBot(Action<TelegramBotOptions> buildAction);
+    IImageHubOptions Browser(Action<BrowserOptions> buildAction);
+    IImageHubOptions TelegramBot(Action<TelegramBotOptions> buildAction);
 }
 
-
-internal sealed class ImageHubOptionsBuilder : IImageHubOptionsBuilder
+internal sealed class ImageHubOptions : IImageHubOptions
 {
     public Action<DbContextOptionsBuilder> DbContextOptionsBuildAction { get; private set; } = delegate { };
     public Action<BrowserOptions> BrowserOptionsBuildAction { get; private set; } = delegate { };
@@ -27,27 +26,27 @@ internal sealed class ImageHubOptionsBuilder : IImageHubOptionsBuilder
     public Action<SourceConcurrencyOptions> SourceConcurrencyOptionsBuildAction { get; private set; } = delegate { };
 
 
-    IImageHubOptionsBuilder IImageHubOptionsBuilder.Database(Action<DbContextOptionsBuilder> buildAction)
+    IImageHubOptions IImageHubOptions.Database(Action<DbContextOptionsBuilder> buildAction)
     {
         DbContextOptionsBuildAction = buildAction;
         return this;
     }
-    IImageHubOptionsBuilder IImageHubOptionsBuilder.Browser(Action<BrowserOptions> buildAction)
+    IImageHubOptions IImageHubOptions.Browser(Action<BrowserOptions> buildAction)
     {
         BrowserOptionsBuildAction = buildAction;
         return this;
     }
-    IImageHubOptionsBuilder IImageHubOptionsBuilder.Resource(Action<ResourceOptions> buildAction)
+    IImageHubOptions IImageHubOptions.Resource(Action<ResourceOptions> buildAction)
     {
         ResourceOptionsBuildAction = buildAction;
         return this;
     }
-    IImageHubOptionsBuilder IImageHubOptionsBuilder.TelegramBot(Action<TelegramBotOptions> buildAction)
+    IImageHubOptions IImageHubOptions.TelegramBot(Action<TelegramBotOptions> buildAction)
     {
         TelegramBotOptionsBuildAction = buildAction;
         return this;
     }
-    IImageHubOptionsBuilder IImageHubOptionsBuilder.Source(Action<SourceConcurrencyOptions> buildAction)
+    IImageHubOptions IImageHubOptions.Source(Action<SourceConcurrencyOptions> buildAction)
     {
         SourceConcurrencyOptionsBuildAction = buildAction;
         return this;

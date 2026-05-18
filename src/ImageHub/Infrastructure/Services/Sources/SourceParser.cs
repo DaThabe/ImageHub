@@ -41,6 +41,12 @@ internal sealed partial class SourceParser : ISourceParser
             source = WeiboBlogSource.Create(userId, blogId);
             return true;
         }
+        // 微博
+        else if (TryParseXiaoHeiHeBbsUrl(url, out var bbsId))
+        {
+            source = WeiboBlogSource.Create(userId, blogId);
+            return true;
+        }
 
         // 返回是否获取到来源
         return source is not null;
@@ -49,8 +55,6 @@ internal sealed partial class SourceParser : ISourceParser
     /// <summary>
     /// 尝试解析Pid
     /// </summary>
-    /// <param name="url"></param>
-    /// <returns></returns>
     private static bool TryParsePixivArtworksUrl(string url, out int pid)
     {
         pid = 0;
@@ -63,8 +67,6 @@ internal sealed partial class SourceParser : ISourceParser
     /// <summary>
     /// 尝试解析用户名和推文Id
     /// </summary>
-    /// <param name="url"></param>
-    /// <returns></returns>
     private static bool TryParseTwiiterTweetUrl(string url, out string username, out long tweetId)
     {
         username = string.Empty;
@@ -79,8 +81,6 @@ internal sealed partial class SourceParser : ISourceParser
     /// <summary>
     /// 尝试解析用户名和推文Id
     /// </summary>
-    /// <param name="url"></param>
-    /// <returns></returns>
     private static bool TryParseXiaohongshuNoteUrl(string url, out string noteId, out string token)
     {
         noteId = string.Empty;
@@ -98,8 +98,6 @@ internal sealed partial class SourceParser : ISourceParser
     /// <summary>
     /// 尝试解析用户Id和微博Id
     /// </summary>
-    /// <param name="url"></param>
-    /// <returns></returns>
     private static bool TryParseWeiboBlogUrl(string url, out long userId, out string blogId)
     {
         userId = 0;
@@ -110,6 +108,16 @@ internal sealed partial class SourceParser : ISourceParser
 
         blogId = match_result.Groups["blogId"].Value;
         return long.TryParse(match_result.Groups["userId"].Value, out userId);
+    }
+
+    private static bool TryParseXiaoHeiHeBbsUrl(string url, out long bbsId)
+    {
+        bbsId = 0;
+
+        var match_result = XiaoHeiHeBBSUrlRegex().Match(url);
+        if (!match_result.Success) return false;
+
+        return long.TryParse(match_result.Groups["bbsId"].Value, out bbsId);
     }
 
 
@@ -129,4 +137,8 @@ internal sealed partial class SourceParser : ISourceParser
     // 微博博客链接匹配 https://weibo.com/{userId}/{blogId}
     [GeneratedRegex(@"https?:\/\/weibo\.com\/(?<userId>\d+)\/(?<blogId>[a-zA-Z0-9]+)")]
     private static partial Regex WeiboBlogUrlRegex();
+
+    // 小黑盒bbs https://www.xiaoheihe.cn/app/bbs/link/{bbsid}
+    [GeneratedRegex(@"https?:\/\/xiaoheihe\.cn\/app/bbs/link/(?<bbsId>\d+)+")]
+    private static partial Regex XiaoHeiHeBBSUrlRegex();
 }

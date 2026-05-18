@@ -24,7 +24,7 @@ internal sealed class SourceEntityConfiguration : IEntityTypeConfiguration<Sourc
             .HasValue<PixivArtworksSource>(nameof(SourceType.Pixiv))
             .HasValue<TwitterTweetSource>(nameof(SourceType.Twitter))
             .HasValue<XiaoHongShuNoteSource>(nameof(SourceType.XiaoHongShu))
-            .HasValue<WeiboBlogSource>(nameof(SourceType.Weibo));
+            .HasValue<WeiboBlogSource>(nameof(SourceType.WeiBo));
 
         builder.Ignore(e => e.Type);
     }

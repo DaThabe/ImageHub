@@ -1,15 +1,15 @@
-﻿using ImageHub;
-using ImageHub.Application.Services;
-using ImageHub.Domain.Repositories;
+﻿using ImageHub.Application.Services;
+using ImageHub.DependencyInjection;
+using ImageHub.Domain.Entities;
 using ImageHub.Infrastructure.Browser;
 using ImageHub.Infrastructure.Database;
-using ImageHub.Infrastructure.Repositories;
 using ImageHub.Infrastructure.Services.Jobs;
 using ImageHub.Infrastructure.Services.Metadatas;
 using ImageHub.Infrastructure.Services.Publishs;
 using ImageHub.Infrastructure.Services.Resources;
 using ImageHub.Infrastructure.Services.Sources;
 using ImageHub.Infrastructure.Telegram;
+using ImageHub.Models;
 using ImageHub.Sources;
 using Microsoft.Extensions.Options;
 using Telegram.Bot;
@@ -26,9 +26,9 @@ public static class DependencyInjectionExtensions
         /// <summary>
         /// 添加 ImageHub 相关业务
         /// </summary>
-        public IServiceCollection AddImageHub(Action<IImageHubOptionsBuilder> optionsAction)
+        public IServiceCollection AddImageHub(Action<IImageHubOptions> optionsAction)
         {
-            var optionsBuilder = new ImageHubOptionsBuilder();
+            var optionsBuilder = new ImageHubOptions();
             optionsAction.Invoke(optionsBuilder);
 
             // 配置
@@ -54,15 +54,16 @@ public static class DependencyInjectionExtensions
 
             // 数据库
             services.AddDbContext<ImageHubDbContext>(optionsBuilder.DbContextOptionsBuildAction);
-            services.AddUnitOfWork<ImageHubDbContext>();
             services.AddHostedService<DbMigrateHostedService>();
-
-            // 仓储
-            services.AddScoped<IJobRepository, JobRepository>();
-            services.AddScoped<ISourceRepository, SourceRepository>();
-            services.AddScoped<IMetadataRepository, MetadataRepository>();
-            services.AddScoped<IResourceRepository, ResourceRepository>();
-            services.AddScoped<IPublishTargetRepository, PublishTargetRepository>();
+            services.AddEfCorePersistence<ImageHubDbContext>(x =>
+            {
+                x.AddRepository<Job, JobId>();
+                x.AddRepository<Source, SourceId>();
+                x.AddRepository<Metadata, MetadataId>();
+                x.AddRepository<Resource, ResourceId>();
+                x.AddRepository<PublishTarget, PublishTargetId>();
+                x.AddRepository<PublishJob, PublishJobId>();
+            });
 
             // 任务
             services.AddScoped<IJobProcessor, JobProcessor>();
@@ -76,7 +77,7 @@ public static class DependencyInjectionExtensions
             // 元数据
             services.AddSingleton<IMetadataProvider, MetadataProvider>();
             services.AddSingleton<IMetadataExtractor, PixivMetadataExtractor>();
-            services.AddSingleton<IMetadataExtractor, XiaoHongShuMetadataExtractor>();
+            //services.AddSingleton<IMetadataExtractor, XiaoHongShuMetadataExtractor>();
             services.AddSingleton<IMetadataExtractor, TwitterMetadataExtractor>();
             services.AddSingleton<IMetadataExtractor, WeiboMetadataExtractor>();
 
@@ -85,7 +86,6 @@ public static class DependencyInjectionExtensions
 
             // 发布
             services.AddScoped<IPublishTargetService, PublishTargetService>();
-            services.AddScoped<IPublishJobRepository, PublishJobRepository>();
             services.AddScoped<IPublishJobService, PublishJobService>();
             services.AddHostedService<PublishTargetInitializer>();
 

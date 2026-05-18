@@ -62,14 +62,9 @@ internal sealed class ResourceDownloader(
         // 默认配置
         var client = new FlurlClient();
 
-        switch (type)
+        if(type == SourceType.Pixiv)
         {
-            case SourceType.Pixiv:
-                // Pixiv 必须校验 Referer
-                client.WithHeader("Referer", "https://www.pixiv.net/");
-                break;
-            case SourceType.Twitter:
-                break;
+            client.WithHeader("Referer", "https://www.pixiv.net/");
         }
 
         var downloader_logger = services.GetRequiredService<ILogger<FlurlResourceDownloader>>();
