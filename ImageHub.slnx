@@ -1,15 +1,25 @@
 <Solution>
   <Folder Name="/Libs/" />
+
   <Folder Name="/Libs/DomainDrivenDesign/">
     <Project Path="libs/DomainDrivenDesign/src/ThabeSoft.DomainDrivenDesign.Abstractions/ThabeSoft.DomainDrivenDesign.Abstractions.csproj" />
     <Project Path="libs/DomainDrivenDesign/src/ThabeSoft.DomainDrivenDesign.EntityFrameworkCore/ThabeSoft.DomainDrivenDesign.EntityFrameworkCore.csproj" />
     <Project Path="libs/DomainDrivenDesign/src/ThabeSoft.DomainDrivenDesign.Mediator/ThabeSoft.DomainDrivenDesign.Mediator.csproj" />
     <Project Path="libs/DomainDrivenDesign/src/ThabeSoft.DomainDrivenDesign/ThabeSoft.DomainDrivenDesign.csproj" />
   </Folder>
+  <Folder Name="/Libs/DomainDrivenDesign/Libs/">
+    <Project Path="libs/DomainDrivenDesign/libs/Mediator/src/ThabeSoft.Mediator.Abstractions/ThabeSoft.Mediator.Abstractions.csproj" />
+    <Project Path="libs/DomainDrivenDesign/libs/Mediator/src/ThabeSoft.Mediator.Contracts/ThabeSoft.Mediator.Contracts.csproj" />
+    <Project Path="libs/DomainDrivenDesign/libs/Mediator/src/ThabeSoft.Mediator/ThabeSoft.Mediator.csproj" />
+  </Folder>
+
   <Folder Name="/Libs/Mediator/">
-    <Project Path="../../ThabeSoft/DomainDrivenDesign/libs/Mediator/src/ThabeSoft.Mediator/ThabeSoft.Mediator.csproj" />
+    <Project Path="libs/Mediator/src/ThabeSoft.Mediator.SourceGenerator/ThabeSoft.Mediator.SourceGenerator.csproj" />
+    <Project Path="libs/Mediator/src/ThabeSoft.Mediator/ThabeSoft.Mediator.csproj" />
+    <Project Path="libs/Mediator/src/ThabeSoft.Mediator.Abstractions/ThabeSoft.Mediator.Abstractions.csproj" />
     <Project Path="libs/Mediator/src/ThabeSoft.Mediator.Contracts/ThabeSoft.Mediator.Contracts.csproj" />
   </Folder>
+
   <Project Path="src/ImageHub.Abstractions/ImageHub.Abstractions.csproj" />
   <Project Path="src/ImageHub.Cli/ImageHub.Cli.csproj" />
   <Project Path="src/ImageHub/ImageHub.csproj" />
