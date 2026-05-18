@@ -28,16 +28,4 @@
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
 	</ItemGroup>
-
-
-	<ItemGroup>
-		<TrimmerRootAssembly Include="Microsoft.Playwright" />
-		<TrimmerRootAssembly Include="System.Text.Json" />
-		<TrimmerRootAssembly Include="ImageHub.Abstractions" />
-		<TrimmerRootAssembly Include="ImageHub" />
-		<TrimmerRootAssembly Include="Serilog" />
-		<TrimmerRootAssembly Include="Serilog.Sinks.Console" />
-		<TrimmerRootAssembly Include="Serilog.Sinks.File" />
-	</ItemGroup>
-
 </Project>
