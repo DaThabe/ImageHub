@@ -20,7 +20,7 @@ internal sealed class TwitterMetadataExtractor(ILogger<TwitterMetadataExtractor>
         logger.LogDebug("正在进入 Twitter 页面");
 
         // 等待页面加载
-        await page.GotoAsync(source.Url, new() { WaitUntil = WaitUntilState.DOMContentLoaded, Timeout = 3000 });
+        await page.GotoAsync(source.Url, new() { WaitUntil = WaitUntilState.DOMContentLoaded });
         await page.WaitForSelectorAsync("article[data-testid='tweet']", new() { State = WaitForSelectorState.Visible });
 
         logger.LogDebug("正在获取元数据");
