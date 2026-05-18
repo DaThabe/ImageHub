@@ -22,8 +22,7 @@
 		
 		<PackageReference Include="ThabeSoft.DomainDrivenDesign" Version="0.1.0-alpha.*" />
 		<PackageReference Include="ThabeSoft.DomainDrivenDesign.EntityFrameworkCore" Version="0.1.0-alpha.*" />
-		<PackageReference Include="ThabeSoft.DomainDrivenDesign.Mediator" Version="0.1.0-alpha.260518-185331" />
-		<PackageReference Include="ThabeSoft.Mediator" Version="0.1.0-alpha.*" />
+		<PackageReference Include="ThabeSoft.DomainDrivenDesign.Mediator" Version="0.1.0-alpha.*" />
 		
 	</ItemGroup>
 
