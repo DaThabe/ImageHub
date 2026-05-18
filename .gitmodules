@@ -1,6 +1,8 @@
 [submodule "libs/DomainDrivenDesign"]
 	path = libs/DomainDrivenDesign
 	url = https://github.com/ThabeSoft/DomainDrivenDesign.git
+	branch = main
 [submodule "libs/Mediator"]
 	path = libs/Mediator
 	url = https://github.com/ThabeSoft/Mediator.git
+	branch = main
